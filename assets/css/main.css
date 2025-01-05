@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Scrollbar สำหรับพื้นที่หลัก */
+body {
+    overflow-y: auto; /* เปิดใช้งาน Scrollbar */
+  }
+  
+  ::-webkit-scrollbar {
+    width: 8px; /* ความกว้างของ Scrollbar */
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f0f0f0; /* สีพื้นหลังของ Scrollbar */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #9ca3af; /* สีของ Scrollbar */
+    border-radius: 10px; /* ทำให้ Scrollbar โค้งมน */
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #6b7280; /* สีเมื่อเลื่อนเมาส์ไปบน Scrollbar */
+  }
+
+  @font-face {
+    font-family: 'Mitr';
+    src: url('~/assets/fonts/Mitr-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  /* body {
+    font-family: 'Mitr', sans-serif;
+  } */
+
+  .font-mitr {
+    font-family: 'Mitr', sans-serif;
+  }
