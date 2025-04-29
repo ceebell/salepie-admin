@@ -1,0 +1,191 @@
+# ตัวอย่างข้อมูล
+    products = [
+        {
+            "prod_id": "sohgoisd3453451",
+            "pic_url": "https://images.unsplash.com/photo-1528310385748-dba09bf1657a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=320&h=320&q=80",
+            "title": "Google Home",
+            "cat_name": "Electronics",
+            "color:": "black",
+            "size" : "M",
+            "is_in_stock": 25,
+            "product_sku": "2384741241",
+            "list_price": "$65",
+            "progress_percent": 25,
+            "channels": ["🛍️ In store", "🌐 Online"],
+            "actions_data": {
+                "view_url": "../../pro/ecommerce/product-details.html",
+                "download_types": ["Excel", "Word"]
+            }
+        },
+        {
+            "prod_id": "678dgosjs9civhh09222s",
+            "pic_url": "https://images.unsplash.com/photo-1613852348851-df1739db8201?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=320&h=320&q=80",
+            "title": "Calvin Klein T-shirts",
+            "cat_name": "Clothing",
+            "color:": "red",
+            "size" : "2L",
+            "is_in_stock": 5,
+            "product_sku": "4124123847",
+            "list_price": "$21",
+            "progress_percent": 50,
+            "channels": ["🛍️ In store"],
+            "actions_data": {
+                "view_url": "../../pro/ecommerce/product-details.html",
+                "download_types": ["Excel", "Word"]
+            }
+        },
+        {
+            "prod_id": "sn8ysdvdfgvhhis3339dhj8",
+            "pic_url": "https://images.unsplash.com/photo-1611911813383-67769b37a149?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=320&h=320&q=80",
+            "title": "Pattern Winter Sweater",
+            "cat_name": "Accessories",
+            "color:": "green",
+            "is_in_stock": 45,
+            "product_sku": "8472341241",
+            "list_price": "$37",
+            "channels": ["🛍️ In store", "🌐 Online"],
+            "actions_data": {
+                "view_url": "../../pro/ecommerce/product-details.html",
+                "download_types": ["Excel", "Word"]
+            }
+        },
+        {
+            "prod_id": "mbiusndfu89s444d76sdf90u0sd",
+            "title": "White Blazer by Armani",
+            "cat_name": "Clothing",
+            "color:": "olive_green",
+            "status": "Available",
+            "product_sku": "7184741241",
+            "list_price": "$17",
+            "channels": ["🛍️ In store"],
+            "pic_url": "https://images.unsplash.com/photo-1616969899621-0ea269426a21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=320&h=320&q=80",
+            "actions_data": {
+                "details_url": "../../pro/ecommerce/product-details.html",
+                "download_types": ["Excel", "Word"]
+            }
+        },
+        {
+            "prod_id": "sn8ysdvdfgvhhis9d444555hj8",
+            "pic_url": "https://images.unsplash.com/photo-1611911813383-67769b37a149?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=320&h=320&q=80",
+            "title": "Pattern Winter Sweater",
+            "cat_name": "Accessories",
+            "color:": "black",
+            "size" : "6L",
+            "is_in_stock": 2,
+            "product_sku": "8472341241",
+            "list_price": "$37",
+            "channels": ["🛍️ In store", "🌐 Online"],
+            "actions_data": {
+                "view_url": "../../pro/ecommerce/product-details.html",
+                "download_types": ["Excel", "Word"]
+            }
+        },
+        {
+            "prod_id": "mbiusndf66677u89sd76sdf90u0sd",
+            "title": "White Blazer by Armani",
+            "cat_name": "Clothing",
+            "color:": "gray",
+            "status": "Available",
+            "product_sku": "7184741241",
+            "list_price": "$17",
+            "channels": ["🛍️ In store"],
+            "pic_url": "https://images.unsplash.com/photo-1616969899621-0ea269426a21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=320&h=320&q=80",
+            "actions_data": {
+                "details_url": "../../pro/ecommerce/product-details.html",
+                "download_types": ["Excel", "Word"]
+            }
+        },
+        {
+            "prod_id": "sn8ys777dvdfgvhhis9dhj8",
+            "pic_url": "https://images.unsplash.com/photo-1611911813383-67769b37a149?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=320&h=320&q=80",
+            "title": "Pattern Winter Sweater",
+            "cat_name": "Accessories",
+            "color:": "blue",
+            "size" : "2L",
+            "is_in_stock": 5,
+            "product_sku": "8472341241",
+            "list_price": "$37",
+            "channels": ["🛍️ In store", "🌐 Online"],
+            "actions_data": {
+                "view_url": "../../pro/ecommerce/product-details.html",
+                "download_types": ["Excel", "Word"]
+            }
+        },
+        {
+            "prod_id": "mbiusndfu8754569sd76sdf90u0sd",
+            "title": "White Blazer by Armani",
+            "cat_name": "Clothing",
+            "color:": "brown",
+            "status": "Available",
+            "product_sku": "7184741241",
+            "list_price": "$17",
+            "channels": ["🛍️ In store"],
+            "pic_url": "https://images.unsplash.com/photo-1616969899621-0ea269426a21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=320&h=320&q=80",
+            "actions_data": {
+                "details_url": "../../pro/ecommerce/product-details.html",
+                "download_types": ["Excel", "Word"]
+            }
+        },
+        {
+            "prod_id": "sn8ysdvdf76456gvhhis9dhj8",
+            "pic_url": "https://images.unsplash.com/photo-1611911813383-67769b37a149?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=320&h=320&q=80",
+            "title": "Pattern Winter Sweater",
+            "cat_name": "Accessories",
+            "color:": "black",
+            "size" : "2L",
+            "is_in_stock": 6,
+            "product_sku": "8472341241",
+            "list_price": "$37",
+            "channels": ["🛍️ In store", "🌐 Online"],
+            "actions_data": {
+                "view_url": "../../pro/ecommerce/product-details.html",
+                "download_types": ["Excel", "Word"]
+            }
+        },
+        {
+            "prod_id": "mbiusndfu89sd76sdf90u0sd",
+            "title": "White Blazer by Armani",
+            "cat_name": "Clothing",
+            "color:": "pink",
+            "status": "Available",
+            "product_sku": "7184741241",
+            "list_price": "$17",
+            "channels": ["🛍️ In store"],
+            "pic_url": "https://images.unsplash.com/photo-1616969899621-0ea269426a21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=320&h=320&q=80",
+            "actions_data": {
+                "details_url": "../../pro/ecommerce/product-details.html",
+                "download_types": ["Excel", "Word"]
+            }
+        },
+        {
+            "prod_id": "sohg4576456isd345345",
+            "pic_url": "https://images.unsplash.com/photo-1528310385748-dba09bf1657a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=320&h=320&q=80",
+            "title": "Google Home",
+            "cat_name": "Electronics",
+            "color:": "black",
+            "is_in_stock": 8,
+            "product_sku": "2384741241",
+            "list_price": "$65",
+            "progress_percent": 25,
+            "channels": ["🛍️ In store", "🌐 Online"],
+            "actions_data": {
+                "view_url": "../../pro/ecommerce/product-details.html",
+                "download_types": ["Excel", "Word"]
+            }
+        },
+        {
+            "prod_id": "678dgos345346js9civhh09s",
+            "pic_url": "https://images.unsplash.com/photo-1613852348851-df1739db8201?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=320&h=320&q=80",
+            "title": "Calvin Klein T-shirts",
+            "cat_name": "Clothing",
+            "is_in_stock": 5,
+            "product_sku": "4124123847",
+            "list_price": "$21",
+            "progress_percent": 50,
+            "channels": ["🛍️ In store"],
+            "actions_data": {
+                "view_url": "../../pro/ecommerce/product-details.html",
+                "download_types": ["Excel", "Word"]
+            }
+        }
+    ]

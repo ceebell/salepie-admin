@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'Mitr';
+    src: url('~/assets/fonts/Mitr-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  /* body {
+    font-family: 'Mitr', sans-serif;
+  } */
+
+  .font-mitr {
+    font-family: 'Mitr', 'sans-serif' ;
+  }

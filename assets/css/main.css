@@ -5,6 +5,10 @@
 /* Custom Scrollbar สำหรับพื้นที่หลัก */
 body {
     overflow-y: auto; /* เปิดใช้งาน Scrollbar */
+    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+   
   }
   
   ::-webkit-scrollbar {
@@ -36,5 +40,33 @@ body {
   } */
 
   .font-mitr {
-    font-family: 'Mitr', sans-serif;
+    font-family: 'Mitr', 'sans-serif' ;
   }
+
+  /* .swal-confirm-btn {
+    background-color: #3b82f6;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    border: none;
+  }
+
+  .swal-cancel-btn {
+    background-color: white;
+    color: #374151;
+    border: 1px solid #d1d5db;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+  } */
+
+  .swal-confirm-btn {
+    @apply bg-blue-600 text-white font-medium px-16 py-2 rounded-md hover:bg-blue-700 mr-4 ;
+  }
+  
+  .swal-cancel-btn {
+    @apply bg-white text-gray-700 border border-gray-300 font-medium px-4 py-2 rounded-md hover:bg-gray-100;
+  }
+
+  

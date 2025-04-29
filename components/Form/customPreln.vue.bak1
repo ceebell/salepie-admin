@@ -1,0 +1,128 @@
+<template>
+<div>
+      <div class="custom-scrollbar  px-4 sm:px-6 lg:px-8 mx-auto">
+                <!-- Begin: Card -->
+                  <!-- {{ groupedRows }} -->
+                  <!-- Start: FORM GROUP -->
+                      <div v-for="(row, rowIndex) in groupedRows" :key="'row-' + rowIndex" class="flex flex-wrap -mx-2">
+                        <div
+                          v-for="(field, index) in row"
+                          :key="field.param || index"
+                          :class="`${getColumnClass(field.width)} px-2 mb-4`"
+                          :style="field.style || {}"
+                        >
+
+                          <FormFieldsTextInput v-if="field.type === 'text'" v-model="form[field.param]" :field="field" :ref="el => (fieldRefs[field.param] = el)" />
+                          <FormFieldsTextarea  v-else-if="field.type === 'textarea'" v-model="form[field.param]" :field="field" :ref="el => (fieldRefs[field.param] = el)" />
+                          <FormFieldsNumber    v-else-if="field.type === 'number'" v-model="form[field.param]" :field="field"  :ref="el => (fieldRefs[field.param] = el)" />
+                          <FormFieldsTag       v-else-if="field.type === 'tag'" v-model="form[field.param]" :field="field"  :ref="el => (fieldRefs[field.param] = el)" />
+                          <FormFieldsSelect2   v-else-if="field.type === 'select2'" v-model="form[field.param]" :field="field"  :ref="el => (fieldRefs[field.param] = el)" />
+                          <FormFieldsSwitchCard  v-else-if="field.type === 'switch_card'" v-model="form[field.param]" :field="field" :ref="el => (fieldRefs[field.param] = el)" />
+                          <FormFieldsRadioVertical   v-else-if="field.type === 'radio_vertical'" v-model="form[field.param]" :field="field"  :ref="el => (fieldRefs[field.param] = el)" />
+                          <FormFieldsCheckbox   v-else-if="field.type === 'checkbox'" v-model="form[field.param]" :field="field"  :ref="el => (fieldRefs[field.param] = el)" />
+                          <FormFieldsSingleImageUpload v-else-if="field.type === 'singleImage'" v-model="form[field.param]" :field="field" :ref="el => (fieldRefs[field.param] = el)" />
+
+                          <!-- OTHERWISE -->
+                          <FormFieldsTextInput v-else  v-model="form[field.param]" :field="field" />
+                          <!-- Render Form Field -->
+                          
+
+
+                        </div>
+                      </div>
+                  <!-- End: FROM GROUP -->
+                            <button
+                                class="btn btn-primary mt-4 sm:w-1/3 text-center"
+                                @click="handleSubmit"
+                              >
+                                Submit
+                            </button>
+                <!-- End: Card -->
+      </div>
+</div>
+</template>
+
+<script setup lang="ts">
+import { FormFieldsRadioVertical } from '#components';
+import { useUI } from '@/composables/useUI';
+
+const { getColumnClass, groupFormFieldsIntoRows } = useUI();
+
+useHead({
+  
+  script: [
+    { src: 'js/core.bundle.js', type: 'text/javascript', defer: true },
+    { src: 'js/layouts/demo1.js', type: 'text/javascript', defer: true },
+  ],
+  link: [
+  {
+    rel: 'stylesheet',
+    href: 'css/prelnmain.min.css', // Point to the file in the 'public' folder
+  },
+  {
+      rel: 'stylesheet',
+      href: 'css/metro-style.css', // Point to the file in the 'public' folder
+    },
+ ],
+});
+import { reactive } from 'vue'
+
+
+const props = defineProps({
+  
+  formGroup: {
+    type: Array,
+    default: () => []
+  }
+});
+
+
+
+const formGroup = ref(props.formGroup)
+const fieldRefs = reactive({})
+
+function getNestedValue(obj: any, path: string) {
+  return path.split('.').reduce((o, i) => o?.[i], obj)
+}
+
+function setNestedValue(obj: any, path: string, value: any) {
+  const parts = path.split('.')
+  const last = parts.pop()
+  const target = parts.reduce((o, i) => (o[i] ??= {}), obj)
+  if (last) target[last] = value
+}
+
+
+
+
+const handleSubmit = () => {
+  let isValid = true
+  for (const key in fieldRefs) {
+    if (fieldRefs[key]?.validate && typeof fieldRefs[key].validate === 'function') {
+      const valid = fieldRefs[key].validate()
+      if (!valid) isValid = false
+    }
+  }
+
+  if (isValid) {
+    console.log('✅ All fields valid:', form.value)
+    // Do something like submit to API
+  } else {
+    console.warn('❌ Validation failed')
+  }
+}
+
+const form = ref({})
+
+const groupedRows = computed(() => groupFormFieldsIntoRows(formGroup.value || []))
+
+watch(form, (newValue) => {
+  console.log('Updated grouped rows:', form.value)
+},{ deep: true })
+
+
+</script>
+
+<style scoped>
+
+</style>

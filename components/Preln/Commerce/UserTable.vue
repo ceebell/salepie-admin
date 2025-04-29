@@ -1,6 +1,6 @@
 <template>
   <div>
-    <main id="content" class="min-h-screen custom-scrollbar lg:ps-[260px] pt-[59px] pb-[24px] sm:pb-[24px] ">
+    <main id="content" class="min-h-screen  custom-scrollbar lg:ps-[260px] pt-[59px] pb-[24px] sm:pb-[24px] ">
         <div class="custom-scrollbar max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto">
           <!-- Breadcrumb -->
           <ol class="lg:hidden pt-5 flex items-center whitespace-nowrap">
@@ -21,147 +21,10 @@
             <!-- Users Table Card -->
             <div class="p-5 space-y-4 flex flex-col bg-white border border-stone-200 shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
                     
-                    <!-- Header -->
-                    <div class="flex flex-wrap justify-between items-center gap-2">
-                        <div>
-                        
-                        <h1 class="text-lg md:text-xl font-semibold text-stone-800 dark:text-neutral-200">
-                            Products ({{ totalItems}})
-                        </h1>
-                        </div>
-                        <div class="flex justify-end items-center gap-x-2">
-                        <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-green-600 text-white hover:bg-green-700 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-green-500" href="../../pro/ecommerce/add-product.html">
-                            <svg class="hidden sm:block shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 12h14" />
-                            <path d="M12 5v14" />
-                            </svg>Add product
-                        </a>
-                        </div>
-                    </div>
-                    <!-- End Header -->
-                     
-                     <!-- Filter Group -->
-                    <div class="pb-4 grid md:grid-cols-1 gap-y-2 md:gap-y-0 md:gap-x-5 border-b border-stone-200 dark:border-neutral-700">
-                      
-            
-                        <div class="flex md:justify-between items-center gap-x-2">
-
-                          <!-- BEGIN: TEXT SEARCH -->
-                          <div class="flex">
-                            <label class="input input-sm">
-                            <i class="ki-filled ki-magnifier">
-                            </i>
-                            <input class="w-80" placeholder="Search" type="text" v-model="quickFilter.q" @keyup.enter="onSearch()"  />
-                            </input>
-                            </label>
-                          </div>
-                          <!-- END: TEXT SEARCH -->
-                          <div class="flex gap-x-2">
-                              <!-- BEGIN: DATE PICKER  -->
-                              <div class="block">
-                                <el-date-picker
-                                  class="w-48"
-                                  v-model="dateRangeValue"
-                                  type="daterange"
-                                  start-placeholder="วันเริ่มต้น"
-                                  end-placeholder="วันสิ้นสุด"
-                                  :default-value="[new Date(), new Date()]"
-                                />
-                                </div>
-                              <!-- END: DATE PICKER  -->
-
-                              <!-- Filter Button -->
-                                <button @click="openSidebarFilter()" type="button"
-                                  class="w-auto py-2 px-2.5 inline-flex items-center gap-x-1.5 text-xs font-medium rounded-lg border border-stone-200 bg-white text-stone-800 shadow-sm hover:bg-stone-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-stone-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
-                                  <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor" stroke-width="2">
-                                    <line x1="21" x2="14" y1="4" y2="4" />
-                                    <line x1="10" x2="3" y1="4" y2="4" />
-                                    <line x1="21" x2="12" y1="12" y2="12" />
-                                    <line x1="8" x2="3" y1="12" y2="12" />
-                                    <line x1="21" x2="16" y1="20" y2="20" />
-                                    <line x1="12" x2="3" y1="20" y2="20" />
-                                    <line x1="14" x2="14" y1="2" y2="6" />
-                                    <line x1="8" x2="8" y1="10" y2="14" />
-                                    <line x1="16" x2="16" y1="18" y2="22" />
-                                  </svg>
-                                  <span class="font-mitr">ตัวกรอง</span>
-                                  <span
-                                    class="font-medium text-[10px] py-0.5 px-[5px] bg-stone-800 text-white leading-3 rounded-full dark:bg-neutral-500">
-                                    2
-                                  </span>
-                                </button>
-                              <!-- End Filter Button -->
-
-                              <!--BEGIN: SortBy -->
-                              <div class="hs-dropdown [--auto-close:true] relative inline-flex">
-                                <button
-                                  id="sort-dropdown-button"
-                                  type="button"
-                                  class="py-1.5 px-3 flex justify-center items-center text-sm text-gray-600 lg:hover:bg-gray-100 rounded-lg dark:text-neutral-400 dark:hover:bg-neutral-800"
-                                >
-                                <svg class="shrink-0 mt-0.5 size-4 mr-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="m3 16 4 4 4-4" />
-                                    <path d="M7 20V4" />
-                                    <path d="m21 8-4-4-4 4" />
-                                    <path d="M17 4v16" />
-                                </svg>
-                                  <span class="max-w-32 truncate font-mitr">
-                                    {{ sortBy ? sortTypeOption.find(opt => opt.id === sortBy)?.label : 'เรียงลำดับ' }}
-                                  </span>
-                                  <svg class="ml-2 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                                  </svg>
-                                </button>
-                            
-                                <!-- Dropdown Menu -->
-                                <div
-                                  class="hs-dropdown-menu hs-dropdown-open:opacity-100 w-56 transition-opacity duration opacity-0 hidden z-10 bg-white rounded-xl shadow-lg dark:bg-neutral-950"
-                                  role="menu"
-                                  aria-labelledby="sort-dropdown-button"
-                                >
-                                  <div class="p-1">
-                                    <button
-                                      v-for="option in sortTypeOption"
-                                      :key="option.id"
-                                      type="button"
-                                      @click="selectSort(option.id)"
-                                      class="w-full text-left text-sm text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-100 dark:text-neutral-300 dark:hover:bg-neutral-800 font-mitr"
-                                    >
-                                      {{ option.label }}
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-                              <!-- End: SortBy -->
-                          </div>
-            
-                       
-                        </div>
-                        <!-- End Col -->
-                    </div>
-                    <!-- End Filter Group -->
-
-                
-                    <!-- Nav Tab -->
-                    <nav class="relative  flex space-x-1 after:absolute after:bottom-0 after:inset-x-0 after:border-b-2 after:border-stone-200 dark:after:border-neutral-700" aria-label="Tabs" role="tablist" aria-orientation="horizontal">
-                        <button type="button" class="hs-tab-active:after:bg-stone-800 hs-tab-active:text-stone-800 px-2.5 py-1.5 mb-2 relative inline-flex justify-center items-center gap-x-2  hover:bg-stone-100 text-stone-500 hover:text-stone-800 text-sm rounded-lg disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-stone-100 after:absolute after:-bottom-2 after:inset-x-0 after:z-10 after:h-0.5 after:pointer-events-none dark:hs-tab-active:text-neutral-200 dark:hs-tab-active:after:bg-neutral-400 dark:text-neutral-500 dark:hover:text-neutral-300 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 active " id="hs-pro-tabs-dut-item-all" aria-selected="true" data-hs-tab="#hs-pro-tabs-dut-all" aria-controls="hs-pro-tabs-dut-all" role="tab">
-                            All
-                        </button>
-                        <button type="button" class="hs-tab-active:after:bg-stone-800 hs-tab-active:text-stone-800 px-2.5 py-1.5 mb-2 relative inline-flex justify-center items-center gap-x-2  hover:bg-stone-100 text-stone-500 hover:text-stone-800 text-sm rounded-lg disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-stone-100 after:absolute after:-bottom-2 after:inset-x-0 after:z-10 after:h-0.5 after:pointer-events-none dark:hs-tab-active:text-neutral-200 dark:hs-tab-active:after:bg-neutral-400 dark:text-neutral-500 dark:hover:text-neutral-300 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700  " id="hs-pro-tabs-dut-item-archived" aria-selected="false" data-hs-tab="#hs-pro-tabs-dut-archived" aria-controls="hs-pro-tabs-dut-archived" role="tab">
-                            Archived
-                        </button>
-                        <button type="button" class="hs-tab-active:after:bg-stone-800 hs-tab-active:text-stone-800 px-2.5 py-1.5 mb-2 relative inline-flex justify-center items-center gap-x-2  hover:bg-stone-100 text-stone-500 hover:text-stone-800 text-sm rounded-lg disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-stone-100 after:absolute after:-bottom-2 after:inset-x-0 after:z-10 after:h-0.5 after:pointer-events-none dark:hs-tab-active:text-neutral-200 dark:hs-tab-active:after:bg-neutral-400 dark:text-neutral-500 dark:hover:text-neutral-300 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700  " id="hs-pro-tabs-dut-item-publish" aria-selected="false" data-hs-tab="#hs-pro-tabs-dut-publish" aria-controls="hs-pro-tabs-dut-publish" role="tab">
-                            Publish
-                        </button>
-                        <button type="button" class="hs-tab-active:after:bg-stone-800 hs-tab-active:text-stone-800 px-2.5 py-1.5 mb-2 relative inline-flex justify-center items-center gap-x-2  hover:bg-stone-100 text-stone-500 hover:text-stone-800 text-sm rounded-lg disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-stone-100 after:absolute after:-bottom-2 after:inset-x-0 after:z-10 after:h-0.5 after:pointer-events-none dark:hs-tab-active:text-neutral-200 dark:hs-tab-active:after:bg-neutral-400 dark:text-neutral-500 dark:hover:text-neutral-300 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700  " id="hs-pro-tabs-dut-item-unpublish" aria-selected="false" data-hs-tab="#hs-pro-tabs-dut-unpublish" aria-controls="hs-pro-tabs-dut-unpublish" role="tab">
-                            Unpublish
-                        </button>
-                    </nav>
-                    <!-- End Nav Tab -->
+                  <!-- BEGIN OF CONTENT -->
                   <div>
 
-                    <!-- Tab Content -->
+                    <!--  TABLE LOADING -->
                     <div id="hs-pro-tabs-dut-all" role="tabpanel" aria-labelledby="hs-pro-tabs-dut-item-all">
                       <!-- Table Content -->
                       <div class="overflow-x-auto [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
@@ -300,172 +163,328 @@
                           </table>
                           
                           <!-- Actual Table -->
-                          <table v-if="navStore.nowLoading === false" class="min-w-full divide-y divide-stone-200 dark:divide-neutral-700">
-                            <thead>
-                            
-                              <tr>
-                                <th scope="col" class="ps-3 text-start">
-                                      <!-- Select All -->
-                                      <input class="checkbox checkbox-sm rounded" type="checkbox" :checked="selectAll === 1" :indeterminate="selectAll === 2" @change="toggleSelectAll" >
-                                </th>
-                                <!-- Generate table headers dynamically based on keys -->
-                                <th v-for="(objItem, index) in filteredObjectStructure" :key="index" 
-                                      scope="col" class="px-5 py-2 text-start">
-                                  {{ objItem.label }} <br>
-                                  {{ objItem.name }}
-                                </th>
-                              </tr>
-                            </thead>
-                  
-                            <tbody class="divide-y divide-stone-200 dark:divide-neutral-700">
-                              <!-- Generate table rows dynamically based on records -->
-                              <tr v-for="(record, index) in paginatedRecords" :key="record.id">
-                                <td class="size-px whitespace-nowrap ps-3 py-4">
-                                  <!-- Select each -->
-                                  <input class="checkbox checkbox-sm rounded" type="checkbox" :checked="checkSelection(record.id)" @change="toggleRecordSelection(record)" />
-                                </td>
-                                <td  v-for="(obj, keyind) in filteredObjectStructure" :key="keyind" 
-                                      
-                                class="px-5 py-3">
-                                  
-                                  <!-- Use dataType to decide how to render the cell -->
-                                    <div v-if="obj['datatype'] === 'image' ">
-                                    <img class="shrink-0 size-12 rounded-md" :src="record[obj['field']]" alt="Product Image">
-                                  </div>
-                                  <div v-else-if="obj['datatype'] === 'money'">
-                                    <span v-if="record[obj['field']] === null || record[obj['field']] === undefined" class="text-green-600 font-semibold">0</span>
-                                    <span class="text-green-600 font-semibold">{{ record[obj['field']] }}</span>
-                                  </div>
-
-                                  <!-- image_text_1 -->
-                                  <div v-else-if="obj['datatype'] === 'image_text_1'" class="flex flex-wrap gap-1.5">
-                                    <span class="badge badge-sm" v-for="(item, k) in record[obj['field']]" :key="k">{{ item }}</span>
-
-                                      <div class="flex items-center gap-2.5">
-                                          <img alt="" class="rounded-full size-7 shrink-0" :src="record[obj['imageField']]"/>
-                                          <div class="flex flex-col text-wrap">
-                                            <div class="text-sm font-medium text-gray-900 hover:text-primary-active mb-px " href="#">
-                                            {{ record[obj['textField']] }}
-                                            </div>
-                                            <div class="text-wrap text-2sm text-gray-700 font-normal hover:text-primary-active" href="#">
-                                              {{ record[obj['subtextField']] }}
-                                            </div>
-                                          </div>
-                                      </div>
-                                  </div>
-
-                                  <!-- text_subtext_1 -->
-                                  <div v-else-if="obj['datatype'] === 'text_subtext_1'" class="flex flex-wrap gap-1.5">
-                                          <div class="flex flex-col">
-                                            <span class="text-sm text-gray-800 font-medium">
-                                              {{ record[obj['textField']] }}
-                                            </span>
-                                            <span class="text-xs text-gray-600">
-                                              sku: {{ record[obj['subtextField']] }}
-                                            </span>
-                                            </div>
-                                  </div>
-
-                                  <div v-else-if="obj['datatype'] === 'number'">
-                                    <span v-if="record[obj['field']] === null || record[obj['field']] === undefined" class="font-semibold">0</span>
-                                    <span class="font-semibold">{{ record[obj['field']] }}</span>
-                                  </div>
-                                  <div v-else-if="obj['datatype'] === 'website'">
-                                    <a :href="record[obj['field']]" target="_blank" class="text-blue-600 underline">{{ record[obj['field']] }}</a>
-                                  </div>
-                                  <div v-else-if="obj['datatype'] === 'link'">
-                                    <a :href="record[obj['field']]" target="_blank" class="text-blue-600 underline">
-                                      {{ record[obj['field']] }}
-                                    </a>
-                                  </div>
-                                  <div v-else-if="(obj['datatype'] === 'date' || obj['datatype'] === 'datetime')">
-                                    <span>{{ new Date(record[obj['field']]).toLocaleString() }}</span>
-                                  </div>
-                                  <div v-else-if="obj['datatype'] === 'switch'" >
-                                    <el-switch
-                                            v-model="record[obj['field']]"
-                                            style="--el-switch-on-color: #13ce66"
-                                          />
-                                  </div>
-                                  <div v-else-if="obj['datatype'] === 'text_list'" class="flex flex-wrap gap-1" >
-                                      <span
-                                        v-for="location in record[obj['field']]"
-                                        :key="location"
-                                        class="p-2 bg-stone-100 text-stone-800 text-xs rounded-md dark:bg-neutral-700 dark:text-neutral-200"
-                                      >
-                                        {{ location }}
-                                      </span>
-                                  </div>
-
-                                  <div v-else-if="obj['datatype'] === 'progress'" class="flex flex-wrap gap-1" >
-                                    <!-- <div class="flex w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden dark:bg-neutral-700" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                      <div class="flex flex-col justify-center overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap dark:bg-neutral-200" style="width: 20%"></div>
-                                    </div> -->
-
-                                    <div
-                                        class="flex w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden dark:bg-neutral-700"
-                                        role="progressbar"
-                                        :aria-valuenow="record.progress"
-                                        aria-valuemin="0"
-                                        aria-valuemax="100"
-                                      >
-                                        <div
-                                          class="flex flex-col justify-center overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap dark:bg-neutral-200"
-                                          :style="{ width: Math.min(record.progress, 100) + '%' }"
-                                        ></div>
-                                      </div>
-                                  </div>
-                                  
-
-                                  <div v-else-if="obj['datatype'] === 'action_button'" class="flex flex-wrap gap-1" >
-                                    <UIThreedotsDropdown></UIThreedotsDropdown>
-                                  
-                                  </div>
-                                  <!-- End: action_button -->
-                                  <div v-else>
-                                      <span v-if="record[obj['field']] === '' || record[obj['field']] === null">ไม่ระบุ</span>
-                                      <span v-else>{{ record[obj['field']]   }}</span> 
-                                  </div>
-                                </td>
-                                  <!-- Action buttons for edit and delete -->
-                              
-                              </tr>
-                            </tbody>
-                          </table>
+                          <!-- <table v-if="navStore.nowLoading === false" class="min-w-full divide-y divide-stone-200 dark:divide-neutral-700"> -->
+                        
+                          <!-- </table> -->
                           <!-- End Table -->
                         </div>
+                          <!-- Container -->
+                          <div  id="content_container">
+                          </div>
+                          <!-- End of Container -->
+                          <!-- Container -->
+                          <div class="">
+                          <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
+                            <div class="flex flex-col justify-center gap-2">
+                            <h1 class="text-xl font-medium leading-none text-gray-900">
+                              SaaS Users
+                            </h1>
+                            <div class="flex items-center flex-wrap gap-1.5 font-medium">
+                              <span class="text-md text-gray-600">
+                              All Members:
+                              </span>
+                              <span class="text-md text-gray-800 font-semibold me-2">
+                              49,053
+                              </span>
+                              <span class="text-md text-gray-600">
+                              Pro Licenses
+                              </span>
+                              <span class="text-md text-gray-800 font-semibold">
+                              1724
+                              </span>
+                            </div>
+                            </div>
+                            <div class="flex items-center gap-2.5">
+                            <a class="btn btn-sm btn-light" href="#">
+                              Import CSV
+                            </a>
+                            <a class="btn btn-sm btn-primary" href="#">
+                              Add Member
+                            </a>
+                            </div>
+                          </div>
+                          </div>
+                          <!-- End of Container -->
+                          
+
+
+                          <!-- Container -->
+                          <div class="">
+                            <div class="grid gap-5 lg:gap-7.5">
+
+                               
+
+                              <div class="card card-grid min-w-full">
+                              <div class="card-header flex-wrap gap-2">
+                                <h3 class="card-title font-medium text-sm">
+                                Showing 10 of 49,053 users
+                                </h3>
+                                <div class="flex flex-wrap gap-2 lg:gap-5">
+                                    <div class="flex">
+                                      <label class="input input-sm">
+                                      <i class="ki-filled ki-magnifier">
+                                      </i>
+                                      <input placeholder="Search users + ENTER" type="text" v-model="quickFilter.q" @keyup.enter="onSearch()"  />
+                                      </input>
+                                      </label>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2">
+                                          <select v-model="quickFilter.itemStatus" @change="onSearch()" class="select select-sm w-28">
+                                            <option value="">
+                                              Select Status
+                                            </option>
+                                            <option value="active">
+                                              Active
+                                            </option>
+                                            <option value="disabled">
+                                              Disabled
+                                            </option>
+                                            <option value="pending">
+                                              Pending
+                                            </option>
+                                          </select>
+                                          <!-- <select class="select select-sm w-28">
+                                          <option value="1">
+                                            Latest
+                                          </option>
+                                          <option value="2">
+                                            Older
+                                          </option>
+                                          <option value="3">
+                                            Oldest
+                                          </option>
+                                          </select> -->
+                                          <!-- <button class="btn btn-sm btn-outline btn-primary">
+                                              <i class="ki-filled ki-setting-4">
+                                              </i>
+                                              Filters
+                                          </button> -->
+                                    </div>
+                                  <div class="flex">
+                                   <!-- Begin: sortingBy -->
+                                    <div class="hs-dropdown [--auto-close:true] relative inline-flex">
+                                      <button
+                                        id="sort-dropdown-button"
+                                        type="button"
+                                        class="py-1.5 px-3 flex justify-center items-center text-sm text-gray-600 lg:hover:bg-gray-100 rounded-lg dark:text-neutral-400 dark:hover:bg-neutral-800"
+                                      >
+                                      <svg class="shrink-0 mt-0.5 size-4 mr-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                          <path d="m3 16 4 4 4-4" />
+                                          <path d="M7 20V4" />
+                                          <path d="m21 8-4-4-4 4" />
+                                          <path d="M17 4v16" />
+                                      </svg>
+                                        <span class="max-w-32 truncate font-mitr">
+                                          {{ sortingSelected ? sortTypeOption.find(opt => opt.id === sortingSelected)?.label : 'เรียงลำดับ' }}
+                                        </span>
+                                        <svg class="ml-2 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                      </button>
+                                  
+                                      <!-- Dropdown Menu -->
+                                      <div
+                                        class="hs-dropdown-menu hs-dropdown-open:opacity-100 w-56 transition-opacity duration opacity-0 hidden z-10 bg-white rounded-xl shadow-lg dark:bg-neutral-950"
+                                        role="menu"
+                                        aria-labelledby="sort-dropdown-button"
+                                      >
+                                        <div class="p-1">
+                                          <button
+                                            v-for="option in sortTypeOption"
+                                            :key="option.id"
+                                            type="button"
+                                            @click="selectSort(option.id)"
+                                            class="w-full text-left text-sm text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-100 dark:text-neutral-300 dark:hover:bg-neutral-800 font-mitr"
+                                          >
+                                            {{ option.label }}
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <!-- End: sortingBy -->
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="card-body">
+                                <div data-datatable="true" data-datatable-page-size="10">
+                                <div class="scrollable-x-auto">
+                                 
+
+                                  <!-- BEGIN: TABLE WITH CODE CONTROLE -->
+                                  <table class="table table-auto table-border " data-datatable-table="true">
+                                      <thead>
+                                        <tr>
+                                          <th class="w-[60px] text-center">
+                                            <input class="checkbox checkbox-sm" type="checkbox" @change="toggleSelectAll" :checked="selectAll === 1" :indeterminate="selectAll === 2" />
+                                          </th>
+                                          <th v-for="(col, i) in filteredObjectStructure" :key="i" class="min-w-[150px]">
+                                            <span class="sort">
+                                              <span class="sort-label font-normal text-gray-700">
+                                                {{ col.label || col.field }}
+                                              </span>
+                                              <span class="sort-icon"></span>
+                                            </span>
+                                          </th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr v-for="(record, index) in paginatedRecords" :key="record.id">
+                                          <td class="text-center">
+                                            <input class="checkbox checkbox-sm" type="checkbox" :checked="checkSelection(record.id)" @change="toggleRecordSelection(record)" />
+                                          </td>
+                                    
+                                          <!-- Render each column dynamically -->
+                                          <td v-for="(col, j) in filteredObjectStructure" :key="j">
+                                            <!-- image -->
+                                            <div v-if="col.datatype === 'image'" class="flex items-center gap-2.5">
+                                              <img :src="record[col.field]" class="rounded-full size-7 shrink-0" />
+                                            </div>
+                                    
+                                            <!-- text_list -->
+                                            <div v-else-if="col.datatype === 'text_list'" class="flex flex-wrap gap-1.5">
+                                              <span class="badge badge-sm" v-for="(item, k) in record[col.field]" :key="k">{{ item }}</span>
+                                            </div>
+                                    
+                                            <!-- switch -->
+                                            <div v-else-if="col.datatype === 'switch'">
+                                              <label class="switch switch-sm">
+                                                <!-- <input type="checkbox" :checked="record[col.field]" @change="record[col.field] = !record[col.field]" /> -->
+                                                <el-switch v-model="record[col.field]" class="ml-2" style="--el-switch-on-color: #13ce66;"  />
+                                              </label>
+                                            </div>
+                                    
+                                            <!-- money -->
+                                            <div v-else-if="col.datatype === 'money'">
+                                              <span class="text-green-700 font-semibold">{{ record[col.field] }}</span>
+                                            </div>
+
+                                            <!-- image_text_1 -->
+                                            <div v-else-if="col.datatype === 'image_text_1'" class="flex flex-wrap gap-1.5">
+                                              <span class="badge badge-sm" v-for="(item, k) in record[col.field]" :key="k">{{ item }}</span>
+
+                                                <div class="flex items-center gap-2.5">
+                                                    <img alt="" class="rounded-full size-7 shrink-0" :src="record[col.imageField]"/>
+                                                    <div class="flex flex-col text-wrap">
+                                                      <div class="text-sm font-medium text-gray-900 hover:text-primary-active mb-px " href="#">
+                                                      {{ record[col.textField] }}
+                                                      </div>
+                                                      <div class="text-wrap text-2sm text-gray-700 font-normal hover:text-primary-active" href="#">
+                                                        {{ record[col.subtextField] }}
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- text_subtext_1 -->
+                                            <div v-else-if="col.datatype === 'text_subtext_1'" class="flex flex-wrap gap-1.5">
+                                                    <div class="flex flex-col">
+                                                      <span class="text-sm text-gray-800 font-medium">
+                                                        {{ record[col.textField] }}
+                                                      </span>
+                                                      <span class="text-xs text-gray-600">
+                                                        {{ record[col.subtextField] }}
+                                                      </span>
+                                                      </div>
+                                            </div>
+                                    
+                                            <!-- default text -->
+                                            <div v-else>
+                                              <span>{{ record[col.field] || 'ไม่ระบุ' }}</span>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                  </table>
+                                  <!-- END: TABLE WITH CODE CONTROLE -->
+                                </div>
+
+                                  <!-- BEGIN: Table Footer -->
+                                  <div class="card-footer justify-center md:justify-between flex-col md:flex-row gap-5 text-gray-600 text-2sm font-medium">
+                                        <!-- BEGIN: Dropdown -->
+                                        <div class="flex items-center gap-2 order-2 md:order-1">
+                                            Show
+                                            <select class="select select-sm w-16" v-model="pageSize" >
+                                              <option v-for="(size, sizeInd) in navStore.page_size_options" :key="sizeInd" :value="size">{{size}}</option>
+                                            </select>
+                                            per page
+                                        </div>
+                                            <div class="flex items-center gap-4 order-1 md:order-2">
+
+                                            <!-- BEGIN: Pagination -->
+                                            <div class="demo-pagination-block">
+                                              <!-- <div class="demonstration">Jump to</div> -->
+                                              <el-pagination
+                                                v-model:current-page="currentPage"
+                                                v-model:page-size="pageSize"
+                                                :size="ep_size"
+                                                layout="prev, pager, next, jumper"
+                                                :total="totalItems"
+                                              
+                                              />
+                                            </div>
+                                            <!-- END: Pagination -->
+                                        </div>
+                                        <!-- End: Dropdown -->
+                                  </div>
+                                  <!-- END: Table Footer -->
+                                </div>
+                                </div>
+                              </div>
+                            
+                              <div class="grid lg:grid-cols-2 gap-5 lg:gap-7.5">
+                              <div class="card">
+                                <div class="card-body px-10 py-7.5 lg:pr-12.5">
+                                <div class="flex flex-wrap md:flex-nowrap items-center gap-6 md:gap-10">
+                                  <div class="flex flex-col items-start gap-3">
+                                  <h2 class="text-1.5xl font-medium text-gray-900">
+                                    Questions ?
+                                  </h2>
+                                  <p class="text-sm text-gray-800 leading-5.5 mb-2.5">
+                                    Visit our Help Center for detailed assistance on billing, payments, and subscriptions.
+                                  </p>
+                                  </div>
+                                  <img alt="image" class="dark:hidden max-h-[150px]" src="/media/illustrations/29.svg"/>
+                                  <img alt="image" class="light:hidden max-h-[150px]" src="/media/illustrations/29-dark.svg"/>
+                                </div>
+                                </div>
+                                <div class="card-footer justify-center">
+                                <a class="btn btn-link" href="">
+                                  Go to Help Center
+                                </a>
+                                </div>
+                              </div>
+                              <div class="card">
+                                <div class="card-body px-10 py-7.5 lg:pr-12.5">
+                                <div class="flex flex-wrap md:flex-nowrap items-center gap-6 md:gap-10">
+                                  <div class="flex flex-col items-start gap-3">
+                                  <h2 class="text-1.5xl font-medium text-gray-900">
+                                    Contact Support
+                                  </h2>
+                                  <p class="text-sm text-gray-800 leading-5.5 mb-2.5">
+                                    Need assistance? Contact our support team for prompt, personalized help your queries & concerns.
+                                  </p>
+                                  </div>
+                                  <img alt="image" class="dark:hidden max-h-[150px]" src="/media/illustrations/31.svg"/>
+                                  <img alt="image" class="light:hidden max-h-[150px]" src="/media/illustrations/31-dark.svg"/>
+                                </div>
+                                </div>
+                                <div class="card-footer justify-center">
+                                <a class="btn btn-link" href="">
+                                  Contact Support
+                                </a>
+                                </div>
+                              </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- End of Container -->
                       </div>
                       <!-- End Table Content -->
         
-                     <!-- BEGIN: Table Footer -->
-                     <div class="card-footer justify-center md:justify-between flex-col md:flex-row gap-5 text-gray-600 text-2sm font-medium">
-                      <!-- BEGIN: Dropdown -->
-                      <div class="flex items-center gap-2 order-2 md:order-1">
-                          Show
-                          <select class="select select-sm w-16" v-model="pageSize" >
-                            <option v-for="(size, sizeInd) in navStore.page_size_options" :key="sizeInd" :value="size">{{size}}</option>
-                          </select>
-                          per page
-                      </div>
-                          <div class="flex items-center gap-4 order-1 md:order-2">
-
-                          <!-- BEGIN: Pagination -->
-                          <div class="demo-pagination-block">
-                            <!-- <div class="demonstration">Jump to</div> -->
-                            <el-pagination
-                              v-model:current-page="currentPage"
-                              v-model:page-size="pageSize"
-                              layout="prev, pager, next, jumper"
-                              :total="totalItems"
-                            />
-                          </div>
-                          <!-- END: Pagination -->
-                      </div>
-                      <!-- End: Dropdown -->
-                </div>
-                <!-- END: Table Footer -->
+                    
                     </div>
-                    <!-- End Tab Content -->
+                    <!-- End TABLE LOADING -->
         
                     <!-- Tab Content -->
                     <div id="hs-pro-tabs-dut-archived" class="hidden" role="tabpanel" aria-labelledby="hs-pro-tabs-dut-item-archived">
@@ -630,7 +649,7 @@
             <!-- End Users Table Card -->
           </div>
         </div>
-   
+    
     </main>
   </div>
 </template>
@@ -643,10 +662,8 @@ import { ElementPlus } from '@element-plus/icons-vue'
 import { pageHeaderEmits, type TagProps } from 'element-plus'
 import { useTransform } from '@/composables/useTransform';
 import type { filterStructure } from '@/models/TableStructure'; 
-import { useDebounceFn } from '@vueuse/core'
-const {  transformRecords, generateUrl_MainParams, mappingQuickFilterToMainCriteria } = useTransform();
 
-const { generateFilterParams } = useTransform();
+const { transformRecords, generateUrl_MainParams } = useTransform();
 
 const navStore = useNavStore()
 const router = useRouter();
@@ -674,14 +691,18 @@ useHead({
 
 const props = defineProps({
   
-  objStructure: {
-    type: Array
-  }
+    objStructure: {
+      type: Array
+    },
+    dataItems: {
+      type: Array
+    },
 });
 
 
 
 const objectStructure = ref(props.objStructure)
+const dataItems = ref(props.dataItems)
 
 
 
@@ -693,7 +714,14 @@ const objectStructure = ref(props.objStructure)
 
 
 
+// Custom DataType Interface
+interface tableStructure {
+  datatype: 'text' | 'image' | 'number' | 'money' | 'website' | 'date' | 'datetime'| 'switch' | 'text_list' | 'action_button' | 'progress' | 'link' ;
+  field: string;
+  label?: string;
+  mapping?: string;
 
+}
 
 // Record Interface
 interface Record {
@@ -756,9 +784,9 @@ const totalRecords = ref(0);
 const totalPages = ref(1);
 const isIndeterminate = ref(false);
 const paginatedRecords= ref([]);
+const ep_size = ref<ComponentSize>('default')
 // Simulate loading state
 const isLoading = ref(true);
-
 const sortTypeOption = ref<optionType[]>([
                                             {id: "",label:"เรียงลำดับ"},
                                             {id: "newest",label:"สินค้ามาใหม่"},
@@ -766,15 +794,11 @@ const sortTypeOption = ref<optionType[]>([
                                             {id: "price-asc",label:"ราคา: ต่ำไปสูง"},
                                             {id: "price-desc",label:"ราคา: สูงไปต่ำ"},
                                         ]);
-                                        
-const sortBy = ref('')
-const sortingPar = ref('')
-const dateRangeValue = ref('')
-watch(dateRangeValue, (newValue) => {
-  console.log("dateRangeValue >>> ", newValue)
-  
-});
 
+
+
+                                      
+const sortingSelected = ref('')
 const quickFilter = ref<filterStructure>(
   {
     q: "",
@@ -784,73 +808,42 @@ const quickFilter = ref<filterStructure>(
   }
 )
 
+const mainParams = ref({})
+// const optionalParam = ref([])
+const sortingPar = ref({})
 
-const mainCriteria = ref({})
-
-onMounted(async() => {
-   URL_to_inputParams()
+onMounted(() => {
+  quickFilter.value = navStore.loadMainParameters(route);
+  // console.log("UserTable.vue ::::: quickFilter.value >>> ",quickFilter.value)`
+  // searchText.value = mainParams.value.q
+  sortingPar.value = navStore.loadSorting(route)
+  // console.log("UserTable.vue ::::: sortingPar.value >>> ",sortingPar.value)
 });
 
-// [f.1] URL >>> PARAMETERS
-const URL_to_inputParams = () => {
-  mainCriteria.value = navStore.loadMainParameters(route);
-  quickFilter.value = mappingQuickFilterToMainCriteria(quickFilter.value, mainCriteria.value)
-  // quickFilter.value =  navStore.loadMainParameters(route);
-  sortingPar.value = navStore.loadSorting(route)
 
+
+
+const handleSizeChange = (val: number) => {
+  console.log(`${val} items per page`)
+}
+const handleCurrentChange = (val: number) => {
+  console.log(`current page: ${val}`)
 }
 
 
-// [f.2] PARAMETERS >>> URL
-// RETURN object ที่มี key เป็นชื่อ parameter และ value เป็นค่าของ parameter
-const inputParams_to_URL = () => {
+const mainCriteria = computed(() => {
+  const criteria = {}
+  // วนลูปเก็บค่าที่ไม่ใช่ optionalAttr
+  Object.keys(route.query).forEach(key => {
+    if (key !== 'optionalAttr' && key !== 'sortBy') {
+      criteria[key] = route.query[key]
+    }
+  })
 
-  const currentQuery = { ...route.query }
+  // console.log("mainCriteria  >>> ",criteria)
 
-  // เตรียม Ordered Query ใหม่
-  let queryObject = {}
-
-  const mainPar = mainCriteria.value
-  let newMainCriteria = {}
-
-  // console.log("%%%%%% PARAMETERS >>> URL ::::: quickFilter.value >>> ",quickFilter.value)
-  // console.log("%%%%%% PARAMETERS >>> URL ::::: mainCriteria.value >>> ",mainCriteria.value)
-
-  newMainCriteria = mappingQuickFilterToMainCriteria(mainPar, quickFilter.value)
-  // console.log("*********** CommonTable :::newMainCriteria >>> ",newMainCriteria)
-
-  // ✅ 1. เพิ่ม mainParams ก่อน
-  for (const [key, value] of Object.entries(newMainCriteria)) {
-    queryObject[key] = value
-  }
-
-  // ✅ 2. ต่อ optionalAttr (อาจเป็น array หลายค่า)
-  if (currentQuery.optionalAttr) {
-    queryObject.optionalAttr = currentQuery.optionalAttr
-  }
-
-  // ✅ 3. ต่อ sorting 
-  if(sortBy.value !== null 
-          && sortBy.value !== null 
-          && sortBy.value !== undefined 
-          &&  sortBy.value !== ''
-    )
-  {
-    queryObject.sortBy = sortBy.value;
-  }
-
-  // console.log("*********** CommonTable :::newMainCriteria >>> ",newMainCriteria)
-  return queryObject;
-}
-
-// [f.3] ป้องกันการเปลี่ยน route.query ซ้ำ
-const debouncedFetch = useDebounceFn(async () => {
-  URL_to_inputParams()
-  await fetchItems(1, pageSize.value)
-  navStore.setNowLoading(false)
-}, 200)
-
-
+  return criteria
+})
 
 const optionalCriteria = computed(() => {
   const criteria = {}
@@ -872,11 +865,46 @@ const optionalCriteria = computed(() => {
     })
   }
 
-  console.log("optionalCriteria  >>> ",criteria)
+  // console.log("optionalCriteria  >>> ",criteria)
   return criteria
 });
 
 
+const sortingCriteria = computed(() => {
+  let criteria: any = ""
+  // วนลูปเก็บค่าที่ไม่ใช่ optionalAttr
+  Object.keys(route.query).forEach(key => {
+    if (key === 'sortBy') {
+      // console.log("computed :::: criteria IN IF KEY === SORT BY  >>> ",key , "value >>> ", route.query[key] )
+      criteria = route.query[key]
+    }
+  }
+)
+// console.log("computed :::: criteria  >>> ",criteria )
+
+
+if(     criteria !== null 
+          && criteria !== undefined 
+          &&  criteria !== ''
+    )
+  {
+    sortingSelected.value = criteria;
+  }
+  else{
+    return null
+  }
+  
+
+
+  return criteria
+});
+
+
+
+const input = ref<string[]>()
+
+
+const color = ref('rgba(19, 206, 102, 0.8)')
 
 
 interface TagsItem {
@@ -889,23 +917,6 @@ const dynamicTags = ref(['Tag 1', 'Tag 2', 'Tag 3', 'Tag 3', 'Tag 3', 'Tag 3', '
 const handleClose = (tag: string) => {
   dynamicTags.value.splice(dynamicTags.value.indexOf(tag), 1)
 }
-
-//************ FIELD MAPPING ************//
-
-
-// const transformRecords = (apiRecords: any[], objectStructure: tableStructure[]) => {
-//   return apiRecords.map(apiRecord => {
-//     const transformedRecord: Record<string, any> = {};
-//     objectStructure.value.forEach(({ field, mapping }) => {
-//       if (apiRecord[mapping] !== undefined) {
-//         transformedRecord[field] = apiRecord[mapping];
-       
-//       }
-//     });
-//     return transformedRecord;
-//   });
-// };
-
 
 
 
@@ -922,19 +933,20 @@ interface FetchData {
 }
 
 const records = ref([]);
+
 const fetchItems = async (page: number, size: number) => {
     navStore.setNowLoading(true) 
 
     paginatedRecords.value = [];
 
-    const mainParam = quickFilter.value
-    console.log('%%% fetchItems ::::: mainParam:', mainParam)
+    const mainParam = mainCriteria.value
+    // console.log('Searching with mainParam:', mainParam)
 
     const optionParam = optionalCriteria.value
     // console.log('Searching with optionParam:', optionParam)
 
-    const sortByParam = sortingPar.value
-    // console.log('Searching with sortByParam:', sortByParam)
+    const sortByParam = sortingCriteria.value
+    console.log('Searching with sortByParam:', sortByParam)
     const sortingBy = {sortBy: ""}
     if(sortByParam !== null && sortByParam !== undefined && sortByParam !== ''){
       sortingBy.sortBy = sortByParam
@@ -943,7 +955,7 @@ const fetchItems = async (page: number, size: number) => {
     try {
 
 
-      const { data: fetchData } = await useFetch(`http://127.0.0.1:8000/arisa-api/salepie-api/products`, {
+      const { data: fetchData } = await useFetch(`http://127.0.0.1:8000/arisa-api/salepie-api/users`, {
         params: {
           page,
           page_size: size,
@@ -964,9 +976,9 @@ const fetchItems = async (page: number, size: number) => {
         totalPages.value = fetchData.value.total_pages;
 
         // paginatedRecords.value = dataFetch.map(item => transformRecord(item));
-        console.log('<<<<<<<<<<< fetchData.value >>>>>>>>>>>>>',fetchData.value);
+        // console.log('<<<<<<<<<<< fetchData.value >>>>>>>>>>>>>',fetchData.value);
         paginatedRecords.value = transformRecords(dataFetch, objectStructure.value);
-        console.log('<<<<<<<<<<< paginatedRecords.value >>>>>>>>>>>>>',paginatedRecords.value);
+        // console.log('<<<<<<<<<<< paginatedRecords.value >>>>>>>>>>>>>',paginatedRecords.value);
         // isLoading.value = false;
         
       }
@@ -977,26 +989,34 @@ const fetchItems = async (page: number, size: number) => {
     }
   };
   // END : fetchItems()
-  
 
-// [f.5] call API when URL changed 
-// ✅ **Watch URL query เพื่อโหลดค่าใหม่อัตโนมัติ**
-watch(() => route.query, async (newQuery) => {
-  debouncedFetch()
+
+
+  watch(() => route.query, async () => {
+  console.log("CommonTable ::: Call API >>> ")
+  await fetchItems(1, pageSize.value);
+  navStore.setNowLoading(false) ;
 }, );
 
 
 
-// watch(sortBy,  () => {
-//   // console.log("sortBy.value >>> ",sortBy.value)
+// watch(sortingSelected,  () => {
+//   // console.log("sortingSelected.value >>> ",sortingSelected.value)
 // },
 // );
   
-URL_to_inputParams()
+
 const productFetching = await fetchItems(1, pageSize.value);
 
 
 // ==================== SEARCH FUNCTION ====================
+
+// const performSearch = async () => {
+//   // รีเซ็ตหน้าเป็นหน้าแรกและเรียกข้อมูลใหม่พร้อมกับพารามิเตอร์ค้นหา
+//   currentPage.value = 1;
+//   isLoading.value = true;
+//   await fetchItems(currentPage.value, pageSize.value);
+// };
 
 
 const num = ref(1)
@@ -1011,30 +1031,6 @@ const openSidebarFilter = () => {
   navStore.sidebarFilterParam = !navStore.sidebarFilterParam
 
   // console.log("navStore.sidebarFilterParam >>> ",navStore.sidebarFilterParam)
-
-};
-
-const onSearch = async () => {
-
-  // console.log("CommonTable ::: quickfilter >>> ",quickFilter.value)
-  // console.log("CommonTable :::mainCriteria >>> ",mainCriteria.value)
-  // console.log("CommonTable :::optionalCriteria >>> ",optionalCriteria.value)
-  // console.log("CommonTable :::sortingCriteria >>> ",sortingPar.value)
-
-  const queryObject = inputParams_to_URL()
-  console.log("%%%%%% onSearch ::::: quickFilter.value >>> ",quickFilter.value)
-  console.log("%%%%%% onSearch ::::: mainCriteria.value >>> ",mainCriteria.value)
-
-  console.log("%%%%%% onSearch ::::: queryObject >>> ",queryObject)
-
-
-  
-
-    router.push({
-    path: route.path,
-    query: queryObject
-  });
-
 
 };
 
@@ -1082,7 +1078,7 @@ watch(pageSize, async() => {
   let queryObject = {}
   queryObject = {...route.query}
   queryObject["pageSize"] = pageSize.value
-  // console.log("queryObject >>> ",queryObject)
+  console.log("queryObject >>> ",queryObject)
   router.push({
     path: route.path,
     query: queryObject
@@ -1162,7 +1158,7 @@ const currentRecordsIds = paginatedRecords.value?.map(record => record.id) || []
     isIndeterminate.value = false;
   }
 
-  // console.log("************ monitorSelection LAST selectAll.value ************ ",selectAll.value)
+  console.log("************ monitorSelection LAST selectAll.value ************ ",selectAll.value)
 }
 
 
@@ -1183,7 +1179,7 @@ const createParamUrl = () => {
 }
 
 const selectSort = (id: string) => {
-  sortBy.value = id
+  sortingSelected.value = id
   
   const queryObject = {
     ...route.query,        // ⬅️ เก็บ query ปัจจุบันไว้ก่อน
@@ -1199,16 +1195,64 @@ const selectSort = (id: string) => {
 
 
 
+// const filterParamsToUrl = () => {
+//   let queryObject = {  };
+
+
+
+//   queryObject = { ...mainParams.value }; // ✅ กระจายค่า mainParams.value
+ 
+//   if(sortingPar.value !== null 
+//           && sortingPar.value.sortBy !== null 
+//           && sortingPar.value.sortBy !== undefined 
+//           &&  sortingPar.value.sortBy !== ''
+//     )
+//   {
+//     queryObject.sortBy = sortingPar.value.sortBy;
+//   }
+
+//   // console.log(" WE ARE GOING TO PUSH queryObject >>> ",queryObject)
+
+//   router.push({
+//     path: route.path,
+//     query: queryObject
+//   });
+
+// };
+
+
+
 
 
 watch(selectedRecords, () => {selectAll.value = 0;  monitorSelection();} , { deep: true });
-watch(paginatedRecords, () => {selectAll.value = 0;  monitorSelection();} , { deep: true });
+watch(paginatedRecords, () => {
+  selectAll.value = 0;  monitorSelection();
+  // console.log(" CHANGE !!! paginatedRecords.value >>> ",paginatedRecords.value.map( (x)  => { 
+  //   return { fa2: x.enforce2FA}
+  // } ) )
+} , { deep: true });
+
+const onSearch = () => {
+  const queryObject = generateUrl_MainParams(quickFilter.value)
+
+  if(sortingPar.value !== null 
+          && sortingPar.value.sortBy !== null 
+          && sortingPar.value.sortBy !== undefined 
+          &&  sortingPar.value.sortBy !== ''
+    )
+  {
+    queryObject.sortBy = sortingPar.value.sortBy;
+  }
+
+    router.push({
+    path: route.path,
+    query: queryObject
+  });
+};
 
 
 
-
-
-watch(sortBy, () => {
+watch(sortingSelected, () => {
   currentPage.value = 1;
   isLoading.value = true;
   // fetchItems(currentPage.value, pageSize.value);

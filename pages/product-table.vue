@@ -11,7 +11,7 @@
 <SidebarFilter></SidebarFilter>
 
 <!-- ========== MAIN CONTENT ========== -->
-<PrelnCommerceCommonTable :objStructure="objectStructure"  ></PrelnCommerceCommonTable>
+<PrelnCommerceCommonTable :objStructure="objectStructure"></PrelnCommerceCommonTable>
 <!-- ========== END MAIN CONTENT ========== -->
 
 <!-- ========== FOOTER ========== -->
@@ -25,7 +25,7 @@ import { ref, computed, onMounted, watch } from 'vue';
 import { Icon } from '@iconify/vue';
 
 import { useTransform } from '@/composables/useTransform';
-import type { TableStructure, filterStructure } from '@/models/TableStructure'; // นำเข้า interface
+import type { TableStructure } from '@/models/TableStructure'; // นำเข้า interface
 
 const { transformRecords } = useTransform();
 
@@ -63,23 +63,13 @@ const records = ref([]);
     mapping: 'pic_url',
     defaultValue: '',
   },
-  {
-    datatype: 'text_subtext_1',
-    textField: 'name', 
-    textMapping: 'title',
-    textDefaultValue: '',
-    subtextField: 'duration', 
-    subtextMapping: 'product_sku',
-    subtextDefaultValue: '',
+  { 
+    field: 'name', 
+    datatype: 'text',
     label: 'Product',
+    mapping: 'title',
+    defaultValue: 'ไม่ระบุ',
   },
-  // { 
-  //   field: 'name', 
-  //   datatype: 'text',
-  //   label: 'Product',
-  //   mapping: 'title',
-  //   defaultValue: 'ไม่ระบุ',
-  // },
   { 
     field: 'sku', 
     datatype: 'text',

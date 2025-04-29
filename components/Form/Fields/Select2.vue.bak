@@ -1,0 +1,92 @@
+<template>
+  <div class="w-full">
+    <label
+      v-if="field.label"
+      class="font-mitr block mb-1 text-sm font-medium text-stone-800 dark:text-white"
+      :class="['block mb-1 text-[13px]', error ? 'text-red-500' : 'text-gray-500 dark:text-neutral-500']"
+    >
+      {{ field.label }} <span v-if="field.required" class="text-red-500 text-bold text-[0.7rem]">[required]</span>
+    </label> 
+    <div class="relative w-full font-mitr" @mouseleave="clearHSSelectInputValue"
+      
+    
+    >
+      <!-- <pre>{{ field.option}}</pre> -->
+      <select
+        ref="selectEl"
+        multiple
+        class="hidden border-stone-200 font-mitr"
+        :data-hs-select="selectConfig"
+        v-model="internalValue"
+        @blur="removeInvalidEntries"
+      >
+        <option v-for="(opt, idx) in field.option" :key="idx" :value="opt.value"
+          :data-hs-select-option="opt.data ? JSON.stringify(opt.data) : undefined">
+          {{ opt.display }}
+        </option>
+      </select>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, watch, onMounted, nextTick } from 'vue'
+
+const props = defineProps({
+  modelValue: Array,
+  field: Object
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+const internalValue = ref(props.modelValue || [])
+const selectEl = ref(null)
+
+watch(internalValue, (val) => emit('update:modelValue', val))
+
+onMounted(async () => {
+  await nextTick()
+
+  if (window.HSSelect && typeof window.HSSelect.getInstance === 'function') {
+    const existing = window.HSSelect.getInstance(selectEl.value)
+
+    if (!existing) {
+      new window.HSSelect(selectEl.value)
+    }
+  } else {
+    console.warn('⚠️ HSSelect not found or select element not ready.')
+  }
+})
+
+function removeInvalidEntries() {
+  const validOptions = props.field.option.map(opt => opt.value)
+  internalValue.value = internalValue.value.filter(v => validOptions.includes(v))
+}
+
+function clearInputOnMouseLeave() {
+  const input = selectEl.value?.nextElementSibling?.querySelector('input')
+  if (input) input.value = ''
+}
+
+async function clearHSSelectInputValue() {
+  await nextTick()
+  const wrapper = selectEl.value?.nextElementSibling
+  if (!wrapper) return
+  const input = wrapper.querySelector('input')
+  if (input) input.value = ''
+}
+
+const selectConfig = JSON.stringify({
+  placeholder: props.field.placeholder || props.field.label,
+  wrapperClasses: "hs-select-active:border-blue-500 hs-select-active:bg-white rounded-md flex items-center flex-wrap text-nowrap w-full text-start text-sm border border-gray-300 hover:border-gray-400 dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-400 dark:hover:border-neutral-500 dark:focus:bg-neutral-700 hs-select-active:dark:bg-neutral-700",
+  toggleTag: "<button type=\"button\" aria-expanded=\"false\"></button>",
+  toggleClasses: "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative flex text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-none focus:ring-0 focus:border-transparent dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400",
+  dropdownClasses: "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white rounded-lg overflow-hidden overflow-y-auto shadow-xl dark:bg-neutral-900",
+  optionClasses: "py-1 px-2 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-200 dark:focus:bg-neutral-800",
+  mode: "tags",
+  tagsClasses: "relative ps-0.5 pe-9 min-h-9.5 flex items-center flex-wrap text-nowrap w-full border border-gray-500 rounded-lg text-start text-sm focus:border-transparent focus:ring-0 dark:bg-neutral-900 dark:text-neutral-400",
+  tagsItemTemplate: "<div class=\"flex flex-nowrap items-center relative z-10 bg-white border border-transparent rounded-md p-[3px] hover:border-gray-200 m-0.5 dark:bg-neutral-800 dark:hover:border-neutral-700\"><div class=\"size-5 me-1\" data-icon></div><div class=\"whitespace-nowrap text-[13px]\" data-title></div><div class=\"inline-flex shrink-0 justify-center items-center size-5 ms-1 rounded-full text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-neutral-400 text-sm dark:hover:bg-neutral-700 dark:text-neutral-400 cursor-pointer\" data-remove><svg class=\"shrink-0 size-3\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/></svg></div></div>",
+  tagsInputClasses: "py-1 sm:py-1.5 px-2 grow order-1 sm:text-sm bg-transparent border-transparent rounded-md focus:outline-none focus:ring-0 dark:text-neutral-400 dark:placeholder:text-neutral-400",
+  optionTemplate: "<div class=\"flex items-center\"><div><div class=\"text-sm text-gray-800 dark:text-neutral-200\" data-title></div><div class=\"text-xs text-gray-500 dark:text-neutral-500\" data-description></div></div><div class=\"ms-auto\"><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-4\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" viewBox=\"0 0 16 16\"><path d=\"M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z\"/></svg></span></div></div>"
+})
+</script>

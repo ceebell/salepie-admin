@@ -1,0 +1,71 @@
+objectStructure.value = [
+    {
+    datatype: 'text',
+    field: 'id', 
+    mapping: 'prod_id',
+    defaultValue: '',
+  },
+  {
+    datatype: 'image',
+    field: 'image', 
+    label: 'Image',
+    mapping: 'pic_url',
+    defaultValue: '',
+  },
+  { 
+    field: 'name', 
+    datatype: 'text',
+    label: 'Product',
+    mapping: 'title',
+    defaultValue: 'ไม่ระบุ',
+  },
+  { 
+    field: 'sku', 
+    datatype: 'text',
+    label: 'SKU',
+    mapping: 'product_sku',
+    defaultValue: 'ไม่ระบุ',
+  },
+  { 
+    field: 'category',
+    datatype: 'text', 
+    label: 'category',
+    mapping: 'cat_name',
+    defaultValue: 'ไม่ระบุ',
+  },
+  { 
+    field: 'price',
+    datatype: 'money', 
+    label: 'ราคา',
+    mapping: 'list_price',
+    defaultValue: 0,
+  },
+  { 
+    field: 'inStock',
+    datatype: 'number', 
+    label: 'inStock',
+    mapping: 'is_in_stock',
+    defaultValue: 0,
+  },
+  { 
+    field: 'inStock',
+    datatype: 'number', 
+    label: 'inStock',
+    mapping: 'is_in_stock',
+    defaultValue: 0,
+  },
+  {
+    datatype: 'text',
+    field: 'color', 
+    label: 'Color',
+    mapping: 'color',
+    defaultValue: '',
+  },
+  { 
+    field: 'actions',
+    datatype: 'action_button', 
+    label: '',
+    mapping: 'actions_data',
+    defaultValue: '',
+  }
+];
